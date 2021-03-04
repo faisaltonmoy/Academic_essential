@@ -1,7 +1,9 @@
 # Question 01
 
 Suppose the class records are stored as follows
+
 CLASS
+
 DB ‘MARY ALLEN’ ,67,45,98,33
 
 DB 'SCOTT BAYLIS’,70,56,87,44
