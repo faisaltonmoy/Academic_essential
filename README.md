@@ -1,4 +1,4 @@
 # Assembly Language
 
-All these are collected & modifed from different online source.
-One of the link: http://www.dailyfreecode.com/
+All these codes are collected & modifed from different online sources.
+One of the Source Link: http://www.dailyfreecode.com/
