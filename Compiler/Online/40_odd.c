@@ -34,7 +34,7 @@ int isMatched(char *str){
         else if((state==1 || state==2) && (str[i] >= 'a' && str[i] <= 'z') ){
             state = 2;
         }
-        else if((state == 0 || state==2) && str[i] == 'S' ){
+        else if((state == 0 ||state == 1 || state==2) && str[i] == 'S' ){
             state = 3;
         }
         else if(state==3 && str[i] == 'A' ){
