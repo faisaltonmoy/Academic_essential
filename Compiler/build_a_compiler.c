@@ -483,6 +483,52 @@ void lexemeTokenization(FILE *source, FILE *target, char sourceFileName[30], cha
     fclose(target);
 }
 
+void lexemeSimplify(FILE *source, FILE *target, char sourceFileName[30], char targetFileName[30]){
+    char c;
+    int bracketStarting = 0;
+
+    if(source == NULL || target == NULL)
+    {
+        printf("\nFile cannot be opened");
+    }
+    else
+    {
+        fputc(' ',target);
+        while( (c = fgetc(source)) != EOF)
+        {
+            if(bracketStarting == 0 && c == '[')
+            {
+                bracketStarting = 1;
+                fputc('[',target);
+                continue;
+            }
+            if(bracketStarting == 1)
+            {
+                if(c == 'i')
+                {
+                    c = fgetc(source);
+                    if(c == 'd')
+                    {
+                        fputs("id ",target);
+                        continue;
+                    }
+                }
+                else if(c == ' ')
+                {
+                    bracketStarting = 0;
+                    continue;
+                }
+            }
+            else
+            {
+                fputc(c,target);
+            }
+        }
+    }
+    fclose(source);
+    fclose(target);
+}
+
 int main()
 {
 
@@ -502,6 +548,7 @@ int main()
     char sourceFileName[30] = "compiler_Asm2_Input.txt";
     char tempFileName[30] = "compiler_Asm2_O1.txt";
     char targetFileName[30] = "compiler_Asm2_O2.txt";
+    char identifierFileName[30] = "compiler_Asm3_O1.txt";
     FILE *source, *target, *temp;
 
     source = fopen(sourceFileName, "r");
@@ -539,6 +586,21 @@ int main()
     printf("\n After Tokenization \n");
     printf("\n");
     target = fopen (targetFileName,"r");
+    while( (c = fgetc(target)) != EOF)
+    {
+        printf("%c",c);
+    }
+    fclose(target);
+
+    printf("\n\n");
+
+    source = fopen(targetFileName, "r");
+    target = fopen(identifierFileName, "w");
+    lexemeSimplify(source, target, targetFileName, identifierFileName);
+
+    printf("\n Only Identifier \n");
+    printf("\n");
+    target = fopen (identifierFileName,"r");
     while( (c = fgetc(target)) != EOF)
     {
         printf("%c",c);
