@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "TableManipulation.h"
 
 int isDigit(char lex)
 {
@@ -529,6 +530,161 @@ void lexemeSimplify(FILE *source, FILE *target, char sourceFileName[30], char ta
     fclose(target);
 }
 
+void symbolTableGenerate(FILE *source, FILE *target, char sourceFileName[30], char targetFileName[30]){
+    int count = 0;
+    char c, str[100], name[100], dataType[100], scope[100], value[100];
+    char previous[100], temp[100];
+    CopyStringToArray(scope,"global");
+
+    while( (c = fgetc(source)) != EOF){
+        int i = 0;
+        if(c=='['){
+            while(1){
+                c = fgetc(source);
+                if(c==']')
+                    break;
+                str[i] = c;
+                i++;
+            }
+
+            if(isDataType(str)){
+               CopyStringToArray(dataType,str);
+            }
+            else if((str[0]=='i' && str[1]=='d' && str[2]==' ') && strlen(str)>3){
+               CopyIdToArray(temp,str);
+
+               if(Search(temp,scope) == -1 && strcmp(previous,"=")!=0 ){
+                   Insert(sl,temp,"var",dataType, scope);
+                   sl++;
+               }
+               else{
+                   if(strcmp(previous,"=") == 0){
+                      UpdateScope(name,temp,scope);
+                   }
+                   else if(strcmp(previous,"return") == 0){
+                      UpdateScope(scope,temp,scope);
+                   }
+               }
+               CopyIdToArray(name,str);
+            }
+            else if(isNumerical(str)){
+               if(strcmp(previous, "=") == 0){
+                   if(Search(name, scope) != -1){
+                       InsertStringInTable(Search(name,scope), 5, str);
+                   }
+                   else if(Search(name,"global") != -1 ){
+                       InsertStringInTable(Search(name,"global"), 5, str);
+                   }
+               }
+               else if(strcmp(previous,"return") == 0){
+                   if(Search(scope,"global") != -1)
+                       InsertStringInTable(Search(scope,"global"), 5, str);
+               }
+               CopyStringToArray(value,str);
+            }
+            else if(strlen(str)==1){
+                if(str[0]=='('){
+                    if(previous[0]=='i' && previous[1]=='d' && previous[2]==' ' && strlen(previous)>3) {
+                        if(count==0){
+                            CopyStringToArray(scope,name);
+                            UpdateId(name,"func","global");
+                        }
+                    }
+                }
+                else if(str[0]=='{'){
+                    count++;
+                }
+                else if(str[0]=='}'){
+                    count--;
+
+                    if(count==0){
+                        CopyStringToArray(scope,"global");
+                    }
+                }
+            }
+
+            CopyStringToArray(previous,str);
+        }
+        else{
+            Delete(str);
+            i = 0;
+        }
+    }
+    DisplayTable();
+    printTableInFile(target);
+    fclose(source);
+    fclose(target);
+}
+
+void modifiedTokenStream(FILE *source, FILE *target, char sourceFileName[30], char targetFileName[30]){
+    int i, count = 0;
+    char c, str[100], name[100], dataType[100], scope[100], value[100];
+    char previous[100], temp[100];
+
+    while( (c = fgetc(source)) != EOF){
+        if(c=='['){
+            while(1){
+                c = fgetc(source);
+                if(c==']')
+                    break;
+                str[i] = c; i++;
+            }
+            if((str[0]=='i' && str[1]=='d' && str[2]==' ') && strlen(str)>3){
+                Delete(temp);
+                CopyIdToArray(temp,str);
+                fputs("[id",target);
+
+                if(Search(temp,scope) != -1){
+                    fprintf(target," %d", Search(temp, scope) + 1);
+                }
+                else{
+                    fprintf(target," %d", Search(temp,"global") + 1);
+                }
+
+                fputc(']',target);
+                CopyIdToArray(name,str);
+            }
+
+            else if(strlen(str)==1){
+                if(str[0]=='('){
+
+                    if(previous[0]=='i' && previous[1]=='d' && previous[2]==' ' && strlen(previous)>3){
+                        if(count==0){
+                            CopyStringToArray(scope,name);
+                        }
+                    }
+                }
+                else if(str[0]=='{'){
+                    count++;
+                }
+                else if(str[0]=='}'){
+                    count--;
+                    if(count==0){
+                        CopyStringToArray(scope,"global");
+                    }
+                }
+                fputc('[',target);
+                fputc(str[0],target);
+                fputc(']',target);
+            }
+            else{
+                fputc('[',target);
+                fputs(str, target);
+                fputc(']',target);
+            }
+            CopyStringToArray(previous,str);
+        }
+        else{
+            fputc(c,target);
+            Delete(str);
+            i = 0;
+        }
+    }
+
+    fclose(source);
+    fclose(target);
+}
+
 int main()
 {
 
@@ -549,6 +705,8 @@ int main()
     char tempFileName[30] = "compiler_Asm2_O1.txt";
     char targetFileName[30] = "compiler_Asm2_O2.txt";
     char identifierFileName[30] = "compiler_Asm3_O1.txt";
+    char modilfyFileName[30] = "compiler_Asm3_O2.txt";
+    char tableFileName[30] = "compiler_Asm3_T1.txt";
     FILE *source, *target, *temp;
 
     source = fopen(sourceFileName, "r");
@@ -608,6 +766,28 @@ int main()
     fclose(target);
 
     printf("\n\n");
+
+    source = fopen(identifierFileName, "r");
+    target = fopen(tableFileName, "w");
+    symbolTableGenerate(source, target, targetFileName, identifierFileName);
+
+    source = fopen(identifierFileName, "r");
+    target = fopen(modilfyFileName, "w");
+    modifiedTokenStream(source, target, targetFileName, identifierFileName);
+
+    printf("\n Modified Token \n");
+    printf("\n");
+    target = fopen (modilfyFileName,"r");
+    while( (c = fgetc(target)) != EOF)
+    {
+        printf("%c",c);
+    }
+    fclose(target);
+
+    printf("\n\n");
+
+
+    remove(tableFileName);
 
     return 0;
 }
