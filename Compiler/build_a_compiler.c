@@ -703,7 +703,9 @@ int main()
     char c;
     char sourceFileName[30] = "compiler_Asm2_Input.txt";
     char tempFileName[30] = "compiler_Asm2_O1.txt";
-    char targetFileName[30] = "compiler_Asm2_O2.txt";
+    char targetFileName[30] = "compiler_Asm_O2.txt";
+    char tempFileName1[30] = "compiler_Asm_O1.txt";
+    char targetFileName1[30] = "compiler_Asm2_O2.txt";
     char identifierFileName[30] = "compiler_Asm3_O1.txt";
     char modilfyFileName[30] = "compiler_Asm3_O2.txt";
     char tableFileName[30] = "compiler_Asm3_T1.txt";
@@ -732,18 +734,18 @@ int main()
 
     printf("\n\n");
 
-        source = fopen(sourceFileName, "r");
-    temp = fopen(tempFileName, "w");
-    lexemeSeparator(source, temp, sourceFileName, tempFileName);
+    source = fopen(targetFileName, "r");
+    temp = fopen(tempFileName1, "w");
+    lexemeSeparator(source, temp, targetFileName, tempFileName1);
 
 
-    temp = fopen(tempFileName, "r");
-    target = fopen(targetFileName, "w");
-    lexemeTokenization(temp, target, tempFileName, targetFileName);
+    temp = fopen(tempFileName1, "r");
+    target = fopen(targetFileName1, "w");
+    lexemeTokenization(temp, target, tempFileName, targetFileName1);
 
     printf("\n After Tokenization \n");
     printf("\n");
-    target = fopen (targetFileName,"r");
+    target = fopen (targetFileName1,"r");
     while( (c = fgetc(target)) != EOF)
     {
         printf("%c",c);
@@ -752,7 +754,7 @@ int main()
 
     printf("\n\n");
 
-    source = fopen(targetFileName, "r");
+    source = fopen(targetFileName1, "r");
     target = fopen(identifierFileName, "w");
     lexemeSimplify(source, target, targetFileName, identifierFileName);
 
@@ -792,6 +794,7 @@ int main()
     return 0;
 }
 /*
+
 #include <stdio.h>
 
 int main() {

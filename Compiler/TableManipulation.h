@@ -158,6 +158,11 @@ void CopyStringToArray(char* str1, char* str2){
     }
 }
 int isDataType(char* str1){
+    //if(strcmp(lex , "int") == 0 || strcmp(lex , "double") == 0 || strcmp(lex , "float") == 0
+       //|| strcmp(lex , "char") == 0 || strcmp(lex , "void") == 0){
+       // return 1;
+       //}
+       //return 0;
     int n = 5;
     char str2[5][20] = {"int","float","double","char", "void"};
     int i;

@@ -1,11 +1,1 @@
- [include] [<] [stdio.h] [>] [
-int] [id main] [(] [)] [{
-] [int] [id number1] [,] [id number2] [,] [id sum] [;] [
-] [id printf] [(] ["Enter] [id two] [integers:] ["] [)] [;] [
-] [id scanf] [(] ["] [%] [id d] [%] [d"] [,] [&] [id number1] [,] [&] [id number2] [)] [;] [
-] [/] [/] [id calculating] [sum
-] [id sum] [=] [id number1] [+] [id number2] [;] [
-] [id printf] [(] ["] [%] [id d] [+] [%] [id d] [=] [%] [d"] [,] [id number1] [,] [id number2] [,] [id sum] [)] [;] [
-] [return] [0] [;] [
-
-] 
+ [#include] [<] [stdio.h] [>] [int] [id main] [(] [)] [{int] [id number1] [,] [id number2] [,] [id sum] [;] [id printf] [(] ["Enter] [id two] [integers:] ["] [)] [;] [id scanf] [(] ["] [%] [id d] [%] [d"] [,] [&] [id number1] [,] [&] [id number2] [)] [;] [id sum] [=] [id number1] [+] [id number2] [;] [id printf] [(] ["] [%] [id d] [+] [%] [id d] [=] [%] [d"] [,] [id number1] [,] [id number2] [,] [id sum] [)] [;] [return] [0] [;] 
