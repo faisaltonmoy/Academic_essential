@@ -875,16 +875,16 @@ int main(){
         fclose(fptr);
 
     char c;
-    char sourceFileName[30] = "170204025_Asm_Input.txt";
-    char tempFileName[30] = "170204025_Asm1_Out1.txt";              //removed comment output
-    char targetFileName[30] = "170204025_Asm1_Out2.txt";            //removed space output
-    char lexSeparatorFileName[30] = "170204025_Asm2_Out1.txt";      //lexeme separator output
-    char lexTokenFileName[30] = "170204025_Asm2_Out2.txt";          //lexeme tokenized output
-    char identifierFileName[30] = "170204025_Asm3_Out1.txt";        //only identifier output
-    char modilfyFileName[30] = "170204025_Asm3_Out2.txt";           //modified token output
-    char lineNumberFileName[30] = "170204025_Asm4_Out1.txt";        //line number output
-    char errorFileName[30] = "170204025_Asm4_Out2.txt";             //Error output
-    char tableFileName[30] = "170204025_Asm3_T1.txt";
+    char sourceFileName[30] = "compiler_Asm_Input.txt";
+    char tempFileName[30] = "compiler_Asm1_Out1.txt";              //removed comment output
+    char targetFileName[30] = "compiler_Asm1_Out2.txt";            //removed space output
+    char lexSeparatorFileName[30] = "compiler_Asm2_Out1.txt";      //lexeme separator output
+    char lexTokenFileName[30] = "compiler_Asm2_Out2.txt";          //lexeme tokenized output
+    char identifierFileName[30] = "compiler_Asm3_Out1.txt";        //only identifier output
+    char modilfyFileName[30] = "compiler_Asm3_Out2.txt";           //modified token output
+    char lineNumberFileName[30] = "compiler_Asm4_Out1.txt";        //line number output
+    char errorFileName[30] = "compiler_Asm4_Out2.txt";             //Error output
+    char tableFileName[30] = "compiler_Asm3_T1.txt";
     FILE *source, *target;
 
     ///removing comment

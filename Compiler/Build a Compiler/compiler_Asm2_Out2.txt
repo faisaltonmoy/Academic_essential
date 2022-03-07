@@ -1,0 +1,31 @@
+
+[kw float] [id x1] [op =] [num 3.125] [sep ;] [sep ;] [sep ;] 
+
+[kw double] [id f1] [brc (] [brc (] [brc (] [brc (] [kw float] [id a] [sep ,] [kw int] [kw int] [id x] [brc )] 
+[par {] [kw if] [brc (] [brc (] [id x] [op <] [id x1] [brc )] 
+[kw double] [id z] [sep ;] 
+[kw else] [id z] [op =] [num 0.01] [sep ;] [par }] [par }] 
+[kw else] [kw return] [id z] [sep ;] 
+[par }] 
+
+[kw int] [id main] [brc (] [kw void] [brc )] [brc )] [brc )] [brc )] 
+[par {] [par {] [par {] [par {] 
+
+[kw int] [kw int] [id n1] [sep ;] 
+
+
+[kw double] [id z] [sep ;] 
+[id n1] [op =] [num 25] [op /] [num 85] [op *] [num 874] [sep ;] 
+[id z] [op =] [id f1] [brc (] [id n1] [brc )] [sep ;] 
+
+[kw for] [brc (] [sep ;] [sep ;] [brc )] [par {] 
+[kw if] [brc (] [id n1] [op ==] [num 54] [brc )] 
+[id n1] [op =] [id n1] [op *] [num 54] [sep ;] [sep ;] [sep ;] [sep ;] 
+
+[kw else] [kw if] [brc (] [brc (] [brc (] [id n1] [op ==] [num 100] [brc )] 
+[id n1] [op =] [id n1] [op *] [unkn 1.ty00] [sep ;] 
+[par }] 
+
+[par }] 
+[par }] 
+
